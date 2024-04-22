@@ -1,0 +1,42 @@
+.imageCardContainer {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    gap: 30px;
+
+    .imageShowContainer {
+        width: 260px;
+        height: 140px;
+        transition-duration: 1s;
+        transition-property: transform;
+        transition-delay: 0.1s;
+    }
+
+    .imageShowContainer:hover {
+        transform: scale(1.2);
+    }
+
+    .imageShowContainer img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .timeDeleteContainer {}
+}
+
+/* .timeAndDelete {
+    display: flex;
+    justify-content: space-between;
+
+    #date {
+        font-size: small;
+        color: #817373;
+    }
+
+    .deleteBtn {
+        min-width: 10px;
+    }
+} */

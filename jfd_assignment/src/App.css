@@ -1,0 +1,14 @@
+*{
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
