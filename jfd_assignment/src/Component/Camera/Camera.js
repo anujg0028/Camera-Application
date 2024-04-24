@@ -79,6 +79,8 @@ const Camera = () => {
     return (<>
         <TransformWrapper
             initialScale={1}
+            initialPositionX={10}
+            initialPositionY={-10}
         >
             {({ zoomIn, zoomOut }) => (
                 <div className="cameraHolder">
@@ -95,7 +97,7 @@ const Camera = () => {
                             >
                                 <MenuItem value={1.7777778}>16:9</MenuItem>
                                 <MenuItem value={1.3333333}>4:3</MenuItem>
-                                <MenuItem value={1}>1:1</MenuItem>
+                                <MenuItem value={0.5555555}>1:1</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
@@ -103,7 +105,7 @@ const Camera = () => {
                     <div className="controlBtn">
                         <Button onClick={captureScreenshot} startIcon={<CameraIcon />} size="large" >Click</Button>
                         {
-                            numberOfCamera > 1 ? <Button onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button> : null
+                            numberOfCamera > 1 ? <Button onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button> :  <Button disabled onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button>
                         }
                     </div>
                 </div>

@@ -10,8 +10,8 @@ const Controls = ({elementRef, aspectRatio, cameraFace }) => {
 
     const { zoomIn, zoomOut } = useControls();
     const videoConstraints = {
-        width: 1380,
-        height: 820,
+        width: {min: 500},
+        height: {min: 400},
         facingMode: cameraFace,
         aspectRatio: aspectRatio
     };
@@ -24,6 +24,7 @@ const Controls = ({elementRef, aspectRatio, cameraFace }) => {
                     <Webcam
                     id='webCam'
                         audio={false}
+                        width={400*videoConstraints.aspectRatio}
                         height={400}
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
 }
 
 .cameraContainer {
@@ -23,12 +24,12 @@
 }
 
 #webCam {
-    width:700
+    width:700px
 }
 
 /* styles.css */
 @media (max-width: 768px) {
     #webCam {
-        width: 250;
+        width: 250px;
     }
   }
