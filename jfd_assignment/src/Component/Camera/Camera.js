@@ -1,5 +1,5 @@
 import "./camera.css"
-import React, { useState, useRef, useEffect, useContext  } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
@@ -25,9 +25,15 @@ const Camera = () => {
 
     useEffect(() => {
         const getDevices = async () => {
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const frontFacingCameras = devices.filter(device => device.kind === "videoinput");
-            setNumberOfCamera(frontFacingCameras.length);
+            try{
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const frontFacingCameras = devices.filter(device => device.kind === "videoinput");
+                setNumberOfCamera(frontFacingCameras.length);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
         }
         getDevices();
     }, []);
@@ -36,11 +42,38 @@ const Camera = () => {
         if (cameraFace === "user") setCameraFace("environment")
         else setCameraFace("user");
     }
+
+    const currentDateTime = () => {
+        try {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear().toString().slice(-2);
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const formattedDateTime = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+            return formattedDateTime;
+        }
+        catch (e) {
+            console.log(e);
+            return "";
+        }
+    }
+
     const captureScreenshot = async () => {
-        const canvas = await html2canvas(elementRef.current);
-        const image = canvas.toDataURL();
-        setPhotoList([...photosList, image]);
-        setModalOpen(false)
+        try {
+            const canvas = await html2canvas(elementRef.current);
+            const image = canvas.toDataURL();
+            const dateTime = currentDateTime();
+            setPhotoList([...photosList, { time: dateTime, src: image }]);
+            setModalOpen(false);
+            toast.success("Photo Click Successfully");
+        }
+        catch (e) {
+            toast.error("Error occur: ", e)
+            console.log(e);
+        }
     };
 
     return (<>
@@ -70,7 +103,7 @@ const Camera = () => {
                     <div className="controlBtn">
                         <Button onClick={captureScreenshot} startIcon={<CameraIcon />} size="large" >Click</Button>
                         {
-                            numberOfCamera>1 ? <Button onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button> : null
+                            numberOfCamera > 1 ? <Button onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button> : null
                         }
                     </div>
                 </div>

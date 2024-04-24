@@ -4,7 +4,7 @@
     width: auto;
     height: auto;
     border-radius: 10px;
-    gap: 30px;
+    gap: 2px;
 }
 
 .imageShowContainer {
@@ -25,21 +25,23 @@
     object-fit: contain;
 }
 
-.timeDeleteContainer {}
-
-/* .timeAndDelete {
+.timeAndDelete {
     display: flex;
     justify-content: space-between;
+    background-color: aliceblue;
+    align-items: center;
+}
 
-    #date {
-        font-size: small;
-        color: #817373;
-    }
+#date {
+    font-size: small;
+    color: #817373;
+}
 
-    .deleteBtn {
-        min-width: 10px;
-    }
-} */
+.deleteBtn {
+    max-width: 15px;
+    padding: 0px;
+}
+
 
 /* styles.css */
 @media (max-width: 768px) {
@@ -48,9 +50,10 @@
         height: 200px;
         gap: 10px;
     }
+
     .imageShowContainer img {
         width: 150px;
         height: 100px;
     }
-    
-  }
+
+}

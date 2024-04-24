@@ -10,26 +10,28 @@ import ImageList from '../../Context/ImageListContext.js';
 
 const Dashboard = () => {
 
-    const [photosList, setPhotoList] = useState(images);
+    const [photosList, setPhotoList] = useState([...images]);
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <ImageList.Provider value={{ photosList, setPhotoList, setModalOpen }}>
-            <div className="dashboard">
-                {modalOpen && <CameraModal />}
-                <div className="dashboardPageContainer">
-                    <div className="navBarContainer">
-                        <div className="galeryTitle">
-                            <img id="logoImg" src={galeryLogo} alt={"Something went wrong"} />
-                            <h3>Gallery</h3>
+            <div className="App">
+                <div className="dashboard">
+                    {modalOpen && <CameraModal />}
+                    <div className="dashboardPageContainer">
+                        <div className="navBarContainer">
+                            <div className="galeryTitle">
+                                <img id="logoImg" src={galeryLogo} alt={"Something went wrong"} />
+                                <h3>Gallery</h3>
+                            </div>
+                            <Button className="clickBtn" onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
                         </div>
-                        <Button className="clickBtn" onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
-                    </div>
-                    <div className="mainBodyContainer">
-                        <div className="imageContainer">
-                            {photosList.length > 0 && photosList.map((photo, index) => (
-                                <ImageCard param={photo} key={index} />
-                            ))}
+                        <div className="mainBodyContainer">
+                            <div className="imageContainer">
+                                {photosList.length > 0 && photosList.map((photo, index) => (
+                                    <ImageCard param={photo} index={index} key={photo.time} />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
