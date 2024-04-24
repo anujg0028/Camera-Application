@@ -68,7 +68,7 @@ const Camera = () => {
             const dateTime = currentDateTime();
             setPhotoList([...photosList, { time: dateTime, src: image }]);
             setModalOpen(false);
-            toast.success("Photo Click Successfully");
+            toast.success("Photo clicked successfully");
         }
         catch (e) {
             toast.error("Error occur: ", e)

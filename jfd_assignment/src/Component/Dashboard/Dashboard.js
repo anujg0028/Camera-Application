@@ -24,7 +24,9 @@ const Dashboard = () => {
                                 <img id="logoImg" src={galeryLogo} alt={"Something went wrong"} />
                                 <h3>Gallery</h3>
                             </div>
-                            <Button className="clickBtn" onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
+                            <div className="clickBtn">
+                                <Button onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
+                            </div>
                         </div>
                         <div className="mainBodyContainer">
                             <div className="imageContainer">

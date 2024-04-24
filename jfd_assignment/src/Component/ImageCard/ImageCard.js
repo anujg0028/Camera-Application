@@ -13,7 +13,7 @@ const ImageCard = ({ param, index }) => {
             let tempPhotoList = [...photosList]; 
             tempPhotoList.splice(index, 1);
             setPhotoList(tempPhotoList);
-            toast.success("Image delete successfully")
+            toast.success("Image deleted successfully")
         }
         catch(e){
             toast.error("Something went wrong please try again")

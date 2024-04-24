@@ -36,8 +36,6 @@
 
 .clickBtn {
     margin-right: 20px;
-    /* color: rgb(135, 135, 247); */
-
 }
 
 #clickImageTitle {
@@ -62,7 +60,7 @@
 /* styles.css */
 @media (max-width: 768px) {
     .imageContainer {
-        width: 86%;
+        width: 76%;
         gap: 30px;
     }
 
