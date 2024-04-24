@@ -22,7 +22,7 @@ function CameraModal() {
                         }}
                         disabled={btnloading}
                     >
-                        X
+                        x
                     </button>
                 </div>
                 <div>

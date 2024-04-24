@@ -10,8 +10,6 @@ const Controls = ({elementRef, aspectRatio, cameraFace }) => {
 
     const { zoomIn, zoomOut } = useControls();
     const videoConstraints = {
-        width: {min: 500},
-        height: {min: 400},
         facingMode: cameraFace,
         aspectRatio: aspectRatio
     };
