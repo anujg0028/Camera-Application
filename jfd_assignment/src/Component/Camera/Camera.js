@@ -17,7 +17,7 @@ const Camera = () => {
 
     const { photosList, setPhotoList, setModalOpen } = useContext(ImageList);
     const elementRef = useRef(null);
-    const [aspectRatio, setAspectRatio] = useState(1.7777778);
+    const [aspectRatio, setAspectRatio] = useState(9/16);
     const [cameraFace, setCameraFace] = useState("user");
     const [numberOfCamera, setNumberOfCamera] = useState(0);
 
@@ -95,9 +95,9 @@ const Camera = () => {
                                 onChange={handleChange}
                                 label="Aspect Ratio"
                             >
-                                <MenuItem value={1.7777778}>16:9</MenuItem>
-                                <MenuItem value={1.3333333}>4:3</MenuItem>
-                                <MenuItem value={0.5555555}>1:1</MenuItem>
+                                <MenuItem value={9/16}>16:9</MenuItem>
+                                <MenuItem value={3/4}>4:3</MenuItem>
+                                <MenuItem value={1}>1:1</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

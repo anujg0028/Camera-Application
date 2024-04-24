@@ -17,7 +17,7 @@
   flex-direction: column;
   position: absolute;
   border-radius: 12px;
-  width: 850px;
+  width: 550px;
   height: 600px;
   gap: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -78,5 +78,6 @@ button {
 @media (max-width: 768px) {
   .modalContainer {
     width: 380px;
+    height: 600px;
   }
 }
