@@ -1,10 +1,13 @@
-import React, { useState } from "react";
 import "./modal.css";
-import Camera from '../Camera/Camera.js'
+import React, { useState, useContext } from "react";
+import Camera from '../Camera/Camera.js';
+import ImageList from '../../Context/ImageListContext.js';
 
-function CameraModal({ setModalOpen, photosList, setPhotoList }) {
+function CameraModal() {
 
+    const { setModalOpen } = useContext(ImageList);
     const [btnloading, setBtnLoading] = useState(false);
+
     return (
         <div className="addNewModalBackground">
             <div className="modalContainer">
@@ -23,7 +26,7 @@ function CameraModal({ setModalOpen, photosList, setPhotoList }) {
                     </button>
                 </div>
                 <div>
-                    <Camera photosList={photosList} setPhotoList={setPhotoList} setModalOpen={setModalOpen} />
+                    <Camera />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import "./camera.css"
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext  } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,9 +11,11 @@ import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
 import Controls from './Controls'
 import { TransformWrapper } from "react-zoom-pan-pinch";
 import html2canvas from 'html2canvas';
+import ImageList from '../../Context/ImageListContext.js';
 
-const Camera = ({ photosList, setPhotoList, setModalOpen }) => {
+const Camera = () => {
 
+    const { photosList, setPhotoList, setModalOpen } = useContext(ImageList);
     const elementRef = useRef(null);
     const [aspectRatio, setAspectRatio] = useState(1.7777778);
     const [cameraFace, setCameraFace] = useState("user");
