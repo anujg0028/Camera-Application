@@ -1,100 +1,65 @@
 .dashboard {
     height: 100%;
     width: 100%;
-
-    .dashboardPageContainer {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        gap: 40px;
-        width: 100%;
-
-        .navBarContainer {
-            display: flex;
-            background-color: rgba(163, 219, 240, 0.192);
-            gap: 10px;
-            height: 50px;
-            align-items: center;
-            justify-content: space-between;
-
-            .galeryTitle {
-                display: flex;
-                margin-left: 20px;
-                gap: 10px;
-
-                #logoImg {
-                    width: 50px;
-                }
-            }
-
-            .clickBtn {
-                margin-right: 20px;
-                /* color: rgb(135, 135, 247); */
-
-            }
-
-            #clickImageTitle {
-                font-size: small;
-                margin-top: 5px;
-            }
-        }
-
-        .mainBodyContainer {
-            display: flex;
-            width: 100%;
-            height: auto;
-            justify-content: center;
-
-            .imageContainer{
-                display: flex;
-                gap: 30px;
-                width: 96%;
-                flex-wrap: wrap;
-            }
-        }
-    }
 }
 
+.dashboardPageContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
 
+.navBarContainer {
+    display: flex;
+    background-color: rgba(163, 219, 240, 0.192);
+    gap: 10px;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+}
 
-/* .mainBody {
-        display: flex;
-        flex-direction: column;
-        background-color: lightcyan;
-        flex-grow: 1;
-        height: auto;
-        overflow: auto;
+.galeryTitle {
+    display: flex;
+    margin-left: 20px;
+    gap: 10px;
+}
 
-        .addBtnArea {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 40px;
+#logoImg {
+    width: 50px;
+}
 
-            .addNoteBtn {
-                display: flex;
-                width: 300px;
-                align-items: center;
-                height: 60px;
-                border-radius: 10px;
-                cursor: pointer;
+.clickBtn {
+    margin-right: 20px;
+    /* color: rgb(135, 135, 247); */
 
-                .btnText {
-                    font-weight: 300;
-                    color: rgb(151, 134, 134);
-                    font-size: large;
-                    margin-left: 13px;
-                }
-            }
+}
 
-        }
+#clickImageTitle {
+    font-size: small;
+    margin-top: 5px;
+}
 
-        .noteArea {
-            display: flex;
-            margin-top: 35px;
-            width: 98%;
-            gap: 27px;
-            flex-wrap: wrap;
-            margin-left: 15px;
-        }
-    } */
+.mainBodyContainer {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+}
+
+.imageContainer {
+    display: flex;
+    gap: 30px;
+    width: 96%;
+    flex-wrap: wrap;
+}
+
+/* styles.css */
+@media (max-width: 768px) {
+    .imageContainer {
+        width: 86%;
+        gap: 30px;
+    }
+
+  }

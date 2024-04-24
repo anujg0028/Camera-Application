@@ -5,27 +5,27 @@
     height: auto;
     border-radius: 10px;
     gap: 30px;
-
-    .imageShowContainer {
-        width: 260px;
-        height: 140px;
-        transition-duration: 1s;
-        transition-property: transform;
-        transition-delay: 0.1s;
-    }
-
-    .imageShowContainer:hover {
-        transform: scale(1.2);
-    }
-
-    .imageShowContainer img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .timeDeleteContainer {}
 }
+
+.imageShowContainer {
+    width: auto;
+    height: 140px;
+    transition-duration: 1s;
+    transition-property: transform;
+    transition-delay: 0.1s;
+}
+
+.imageShowContainer:hover {
+    transform: scale(1.4);
+}
+
+.imageShowContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.timeDeleteContainer {}
 
 /* .timeAndDelete {
     display: flex;
@@ -40,3 +40,17 @@
         min-width: 10px;
     }
 } */
+
+/* styles.css */
+@media (max-width: 768px) {
+    .imageCardContainer {
+        width: 150px;
+        height: 200px;
+        gap: 10px;
+    }
+    .imageShowContainer img {
+        width: 150px;
+        height: 100px;
+    }
+    
+  }
