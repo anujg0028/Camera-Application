@@ -1,0 +1,41 @@
+.monthWiseImageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.monthShowContainer {
+    display: flex;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+#monthSpan {
+    font-size:x-large;
+    font-weight: bold;
+
+}
+
+.cardShowContiner {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 35px
+}
+
+/* styles.css */
+@media (max-width: 768px) {
+
+    .monthWiseImageContainer {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .cardShowContiner {
+        gap: 10px
+    }
+}

@@ -12,12 +12,14 @@ import Controls from './Controls'
 import { TransformWrapper } from "react-zoom-pan-pinch";
 import html2canvas from 'html2canvas';
 import ImageList from '../../Context/ImageListContext.js';
+import moment from 'moment';
+
 
 const Camera = () => {
 
     const { photosList, setPhotoList, setModalOpen } = useContext(ImageList);
-    const elementRef = useRef(null);
     const [aspectRatio, setAspectRatio] = useState(9/16);
+    const elementRef = useRef(null);
     const [cameraFace, setCameraFace] = useState("user");
     const [numberOfCamera, setNumberOfCamera] = useState(0);
 
@@ -25,13 +27,12 @@ const Camera = () => {
 
     useEffect(() => {
         const getDevices = async () => {
-            try{
+            try {
                 const devices = await navigator.mediaDevices.enumerateDevices();
                 const frontFacingCameras = devices.filter(device => device.kind === "videoinput");
                 setNumberOfCamera(frontFacingCameras.length);
             }
-            catch(e)
-            {
+            catch (e) {
                 console.log(e);
             }
         }
@@ -46,6 +47,7 @@ const Camera = () => {
     const currentDateTime = () => {
         try {
             const now = new Date();
+            console.log(now);
             const day = String(now.getDate()).padStart(2, '0');
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const year = now.getFullYear().toString().slice(-2);
@@ -66,7 +68,29 @@ const Camera = () => {
             const canvas = await html2canvas(elementRef.current);
             const image = canvas.toDataURL();
             const dateTime = currentDateTime();
-            setPhotoList([...photosList, { time: dateTime, src: image }]);
+            const date = moment();
+            const monthYear = date.format('MMMM YYYY');
+
+            if (photosList.length > 0 && photosList[0].month === monthYear) {
+                if (photosList[0].photos[0].date === date.format('DD MMMM')) {
+                    const newPhotoList = [...photosList];
+                    newPhotoList[0].photos[0].images.push({ time: dateTime, src: image, aspectRatio: aspectRatio });
+                    setPhotoList(newPhotoList);
+                }
+                else {
+                    const newPhotoList = [...photosList];
+                    newPhotoList[0].photos = [{ date: date.format('DD MMMM'), images: [{ time: dateTime, src: image, aspectRatio: aspectRatio }] }, ...newPhotoList[0].photos]
+                }
+            }
+            else {
+                console.log("abc")
+                console.log(photosList);
+                let newObj = {
+                    month: monthYear,
+                    photos: [{ date: date.format('DD MMMM'), images: [{ time: dateTime, src: image, aspectRatio: aspectRatio }] }]
+                };
+                setPhotoList([newObj, ...photosList]);
+            }
             setModalOpen(false);
             toast.success("Photo clicked successfully");
         }
@@ -84,30 +108,29 @@ const Camera = () => {
         >
             {({ zoomIn, zoomOut }) => (
                 <div className="cameraHolder">
-                    <div>
+                    <div className='aspect'>
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-standard-label">Aspect Ratio</InputLabel>
                             <Select
-                                style={{ width: "100%" }}
+                                style={{ width: "90%" }}
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={aspectRatio}
                                 onChange={handleChange}
                                 label="Aspect Ratio"
                             >
-                                <MenuItem value={9/16}>16:9</MenuItem>
-                                <MenuItem value={3/4}>4:3</MenuItem>
+                                <MenuItem value={9/16}>9:16</MenuItem>
+                                <MenuItem value={4/3}>4:3</MenuItem>
                                 <MenuItem value={1}>1:1</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
                     <Controls elementRef={elementRef} aspectRatio={aspectRatio} cameraFace={cameraFace} />
-                    <div className="controlBtn">
-                        <Button onClick={captureScreenshot} startIcon={<CameraIcon />} size="large" >Click</Button>
-                        {
-                            numberOfCamera > 1 ? <Button onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button> :  <Button disabled onClick={handleFaceSwitch} startIcon={<CameraswitchIcon />} size="large" ></Button>
-                        }
-                    </div>
+                    <Button id='ClickBtn' onClick={captureScreenshot} startIcon={<CameraIcon style={{fontSize: '40px'}} />} size="large" ></Button>
+                    {
+                        numberOfCamera > 1 ? <Button id='switchBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> : <Button disabled id='switchDisableBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> 
+                    }
+
                 </div>
             )}
         </TransformWrapper>
@@ -116,27 +139,3 @@ const Camera = () => {
 }
 
 export default Camera
-
-
-
-
-
-// {/* <Webcam
-//                             audio={false}
-//                             screenshotFormat="image/jpeg"
-//                             width={400}
-//                             videoConstraints={videoConstraints}
-//                         >
-//                             {({ getScreenshot }) => (<>
-//                                 <button
-//                                     onClick={() => {
-//                                         const imageSrc = getScreenshot();
-//                                         setPhotoList([...photosList, imageSrc]);
-//                                         setModalOpen(false)
-//                                     }}
-//                                 >
-//                                     Capture photo
-//                                 </button>
-//                             </>)}
-
-//                         </Webcam> */}

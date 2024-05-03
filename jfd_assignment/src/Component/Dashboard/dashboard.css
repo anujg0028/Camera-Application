@@ -38,6 +38,10 @@
     margin-right: 20px;
 }
 
+.clickBtn>img {
+    width: 38px;
+}
+
 #clickImageTitle {
     font-size: small;
     margin-top: 5px;
@@ -53,15 +57,36 @@
 .imageContainer {
     display: flex;
     gap: 30px;
-    width: 96%;
+    width: 92%;
     flex-wrap: wrap;
+}
+
+.clickFixedBtn {
+    width: 80px;
+    height: 75px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    cursor: pointer;
+    background-color: rgb(124, 202, 228);
+}
+
+#cameraLogo {
+  width: 60%;
+  height: 60%;
+  margin-top: 15px;
 }
 
 /* styles.css */
 @media (max-width: 768px) {
+
     .imageContainer {
-        width: 76%;
-        gap: 30px;
+        width: 82%;
+    }
+
+    .galeryTitle>h3 {
+       margin-top: 5px;
     }
 
 }

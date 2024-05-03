@@ -4,9 +4,11 @@ import Button from '@mui/material/Button';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import galeryLogo from '../../assets/Images/galeryLogo.png';
 import { images } from '../../assets/Constant/constant.js';
-import ImageCard from '../ImageCard/ImageCard.js';
 import CameraModal from '../CameraModal/Modal.js'
 import ImageList from '../../Context/ImageListContext.js';
+import Shimmer from '../Shimmer/Shimmer.js';
+import MonthCardContainer from "../MonthCardContainer/MonthCardContainer.js";
+import camera from '../../assets/Images/camera.png'
 
 const Dashboard = () => {
 
@@ -25,14 +27,22 @@ const Dashboard = () => {
                                 <h3>Gallery</h3>
                             </div>
                             <div className="clickBtn">
-                                <Button onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
+                                <Button onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon style={{fontWeight: '20px'}} />} size="small" ><span id="clickImageTitle">Click Image</span></Button>
                             </div>
                         </div>
                         <div className="mainBodyContainer">
-                            <div className="imageContainer">
-                                {photosList.length > 0 && photosList.map((photo, index) => (
-                                    <ImageCard param={photo} index={index} key={photo.time} />
-                                ))}
+                            {
+                                photosList.length === 0 ? <Shimmer /> : (
+                                    <div className="imageContainer">
+                                        {photosList.length > 0 && photosList.map((photo, index) => (
+                                            <MonthCardContainer param={photo} monthIndex={index} key={photo.month} />
+                                        ))}
+                                    </div>
+                                )
+                            }
+                            <div className="clickFixedBtn">
+                            {/* <Button onClick={() => setModalOpen(true)} startIcon={<AddAPhotoIcon />} size="larger" ></Button> */}
+                            <img onClick={() => setModalOpen(true)} id='cameraLogo' src={camera} alt="No" />
                             </div>
                         </div>
                     </div>

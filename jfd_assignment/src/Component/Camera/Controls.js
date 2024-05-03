@@ -1,12 +1,15 @@
 import './camera.css'
 import React from "react";
 import plusLogo from '../../assets/Images/plusLogo.jpeg'
+import Button from '@mui/material/Button';
 import minusLogo from '../../assets/Images/minusLogo.jpeg'
 import { useControls } from "react-zoom-pan-pinch";
 import { TransformComponent } from "react-zoom-pan-pinch";
 import Webcam from "react-webcam";
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 
-const Controls = ({elementRef, aspectRatio, cameraFace }) => {
+const Controls = ({ elementRef, aspectRatio, cameraFace }) => {
 
     const { zoomIn, zoomOut } = useControls();
     const videoConstraints = {
@@ -16,20 +19,21 @@ const Controls = ({elementRef, aspectRatio, cameraFace }) => {
 
     return (
         <div className="cameraContainer">
-            <button className="zoomBtn" onClick={() => zoomIn()}><img className="zoomLogo" src={plusLogo} alt="+"></img></button>
-            <div ref={elementRef}>
-                <TransformComponent>
+             <Button id="zoomInBtn" onClick={() => zoomIn()} startIcon={< ZoomInIcon style={{fontSize: '40px'}} />} size="large" ></Button>
+            <TransformComponent>
+                <div ref={elementRef}>
                     <Webcam
-                    id='webCam'
+                        ref={elementRef}
+                        id='webCam'
                         audio={false}
-                        width={400*videoConstraints.aspectRatio}
+                        width={400 * videoConstraints.aspectRatio}
                         height={400}
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}
                     />
-                </TransformComponent>
-            </div>
-            <button className="zoomBtn" onClick={() => zoomOut()}><img className="zoomLogo" src={minusLogo} alt="-"></img></button>
+                </div>
+            </TransformComponent>
+            <Button id="zoomOutBtn" onClick={() => zoomOut()} startIcon={<ZoomOutIcon style={{fontSize: '40px'}} />} size="large" ></Button>
         </div>
     );
 };

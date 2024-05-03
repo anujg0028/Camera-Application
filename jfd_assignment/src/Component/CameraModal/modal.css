@@ -18,18 +18,12 @@
   position: absolute;
   border-radius: 12px;
   width: 550px;
-  height: 600px;
+  height: 570px;
   gap: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background-color: white;
   padding: 20px;
 
-}
-
-.removeBtn {
-  margin: 5px;
-  display: flex;
-  align-items: center
 }
 
 .titleCloseBtn {
@@ -46,23 +40,6 @@ button {
   font-size: 20px;
   cursor: pointer;
   color: rgb(236, 79, 79);
-}
-
-.majorButton {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 5px;
-  flex: 0 0 40px;
-
-}
-
-.applyBtn {
-  margin-left: auto;
-}
-
-.remove {
-  margin-left: 2%;
-  /* Pushes the "Remove All" button to the end */
 }
 
 .modal-title {
