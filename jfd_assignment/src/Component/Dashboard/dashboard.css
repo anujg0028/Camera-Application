@@ -13,6 +13,7 @@
     flex-direction: column;
     gap: 25px;
     width: 100%;
+    min-height: 100vh
 }
 
 .deleteContainer {
@@ -73,7 +74,8 @@
 
 #clickImageTitle {
     font-size: small;
-    margin-top: 5px;
+    margin-top: 4px;
+    color: black;
 }
 
 .mainBodyContainer {
@@ -92,19 +94,22 @@
 
 .clickFixedBtn {
     width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 75px;
     border-radius: 50%;
     position: fixed;
     bottom: 50px;
     right: 40px;
     cursor: pointer;
-    background-color: rgb(124, 202, 228);
+    background-color: rgb(124 202 228 / 58%);
+    z-index: 20;
 }
 
 #cameraLogo {
-  width: 60%;
-  height: 60%;
-  margin-top: 15px;
+  margin-left: 10px;
+  font-size: 40px;
 }
 
 .footer {
@@ -113,10 +118,25 @@
     justify-content: center;
     align-items: center;
     height: 30px;
-    bottom: 0px;
     width: 100%;
-    align-self: flex-end;
     background-color: rgba(163, 219, 240, 0.973);
+    margin-top: auto;
+}
+
+.deleteAndDownloadBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#downloadBtn {
+    margin-top: 5px;
+}
+
+#imageUploadBtn:hover {
+    background-color: transparent;
+    border: 0px solid white;
 }
 
 /* styles.css */

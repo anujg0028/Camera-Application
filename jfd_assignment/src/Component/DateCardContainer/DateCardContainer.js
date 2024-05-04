@@ -9,7 +9,7 @@ import TickBtn from '../../Context/TickBtn.js';
 const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
 
     const { photosList, setModalDeleteOpen } = useContext(ImageList);
-    const { tickBtnValue, setTickBtnValue, tickBtnPlace, setTickBtnPlace } = useContext(TickBtn);
+    const { tickBtnValue, setTickBtnValue, tickBtnPlace, setTickBtnPlace, singleTickBtn, setSingleTickBtn } = useContext(TickBtn);
 
     const handleDateShowing = () => {
         const date = moment();
@@ -33,7 +33,7 @@ const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
         return array.filter(obj => obj.month !== targetObject.month || obj.date !== targetObject.date);
     }
 
-    const handleTickBtn = () => { 
+    const handleTickBtn = () => {
 
         if (tickBtnPlace.length === 0) {
             setModalDeleteOpen(true);
@@ -46,12 +46,18 @@ const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
                 setModalDeleteOpen(false);
                 setTickBtnValue(0);
                 setTickBtnPlace([]);
+                setSingleTickBtn([]);
             }
             else {
                 setTickBtnPlace(newValue);
             }
         }
         else if (tickBtnValue === 1) {
+            let dateImagesSelected = singleTickBtn.filter((obj) => obj.month === photosList[monthIndex].month && obj.date === photosList[monthIndex].photos[dateIndex].date);
+            if (dateImagesSelected.length > 0) {
+                let newSingleTick = singleTickBtn.filter((obj) => obj.month !== photosList[monthIndex].month && obj.date !== photosList[monthIndex].photos[dateIndex].date);
+                setSingleTickBtn(newSingleTick);
+            }
             setTickBtnPlace([...tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }]);
         }
     }

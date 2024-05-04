@@ -11,6 +11,19 @@
     border-radius: 10px;
  }
 
+ #singleImageTickBtn{
+    z-index: 7;
+    cursor: pointer;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #d3d3d345;
+    top: 10px;
+    right: 10px;
+    border: 3px solid #00000054
+}
+
 #deleteBtn {
     z-index: 7;
     cursor: pointer;

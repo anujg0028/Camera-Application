@@ -82,8 +82,6 @@ const Camera = () => {
                 }
             }
             else {
-                console.log("abc")
-                console.log(photosList);
                 let newObj = {
                     month: monthYear,
                     photos: [{ date: date.format('DD MMMM'), images: [{ time: dateTime, src: image, aspectRatio: aspectRatio }] }]
