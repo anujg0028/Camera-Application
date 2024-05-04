@@ -17,7 +17,7 @@ const Controls = ({ elementRef, aspectRatio, cameraFace }) => {
 
     return (
         <div className="cameraContainer">
-            <Button id="zoomInBtn" onClick={() => zoomIn()} startIcon={< ZoomInIcon style={{ fontSize: '40px' }} />} size="large" ></Button>
+            <Button id="zoomInBtn" onClick={() => zoomOut()} startIcon={< ZoomOutIcon style={{ fontSize: '40px' }} />} size="large" ></Button>
             <div ref={elementRef}>
                 <TransformComponent>
                     <Webcam
@@ -31,7 +31,7 @@ const Controls = ({ elementRef, aspectRatio, cameraFace }) => {
                     />
                 </TransformComponent>
             </div>
-            <Button id="zoomOutBtn" onClick={() => zoomOut()} startIcon={<ZoomOutIcon style={{ fontSize: '40px' }} />} size="large" ></Button>
+            <Button id="zoomOutBtn" onClick={() => zoomIn()} startIcon={<ZoomInIcon style={{ fontSize: '40px' }} />} size="large" ></Button>
         </div>
     );
 };

@@ -62,6 +62,10 @@ const Dashboard = () => {
                             savePhotoToFileSystem(directoryHandle, photo);
                         });
                         toast.success("Photos downloaded successfully!");
+                        setModalDeleteOpen(false);
+                        setTickBtnValue(0);
+                        setTickBtnPlace([]);
+                        setSingleTickBtn([]);
                     })
                     .catch((error) => {
                         toast.error("Error selecting directory: " + error.message);
@@ -280,7 +284,7 @@ const Dashboard = () => {
 
                                 <div className="deleteAndDownloadBtn">
                                     <div>
-                                    <Button id="downloadBtn" onClick={() => handleDownload()} startIcon={<DownloadIcon style={{ fontSize: '35px' }} />} size="large"></Button>
+                                        <Button id="downloadBtn" onClick={() => handleDownload()} startIcon={<DownloadIcon style={{ fontSize: '35px' }} />} size="large"></Button>
                                     </div>
                                     <div className="deleteBtn">
                                         <Button onClick={() => handleDelete()} startIcon={<DeleteForeverIcon style={{ fontSize: '35px' }} />} size="large" ></Button>
@@ -300,7 +304,7 @@ const Dashboard = () => {
                                         variant="outlined"
                                         component="label"
                                         htmlFor="imageUpload"
-                                        startIcon={<DriveFolderUploadRoundedIcon  style={{ fontSize: '38px', color: '#0d95c1' }} />}
+                                        startIcon={<DriveFolderUploadRoundedIcon style={{ fontSize: '38px', color: '#0d95c1' }} />}
                                         size="small"
                                         id="imageUploadBtn"
                                         sx={{ backgroundColor: 'transparent', border: 'none', color: 'inherit' }}
@@ -327,7 +331,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className="footer">
-                                <p>Developed by Anuj Garg</p>
+                                <p>Developed by <i>Anuj Garg</i></p>
                             </div>
                         </div>
                     </div>
