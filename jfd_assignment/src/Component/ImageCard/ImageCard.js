@@ -3,10 +3,13 @@ import React, { useContext } from 'react'
 import { toast } from "react-toastify";
 import deleteLogo from '../../assets/Images/deleteLogo.svg'
 import ImageList from '../../Context/ImageListContext.js';
+import TickBtn from '../../Context/TickBtn';
 
-const ImageCard = ({ param, index, monthIndex, dateIndex, tickBtn }) => {
+const ImageCard = ({ param, index, monthIndex, dateIndex, objectExistsInArray }) => {
 
     const { photosList, setPhotoList } = useContext(ImageList);
+
+    const { tickBtnValue, tickBtnPlace } = useContext(TickBtn);
 
     const handleDeleteCard = () => {
         try {
@@ -36,11 +39,11 @@ const ImageCard = ({ param, index, monthIndex, dateIndex, tickBtn }) => {
     }
 
     const handleSelectAll = () => {
-        if(tickBtn === 1)return  {border: '10px solid lightblue', padding: '5px', transform: 'scale(1)'};
+        if(tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, {month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date}))return  {border: '10px solid lightblue', padding: '5px', transform: 'scale(1)'};
     }
 
     const handleDeleteBtn = () => {
-        if(tickBtn === 1)return {display: 'none'};
+        if(tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, {month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date}))return {display: 'none'};
     }
 
     return (

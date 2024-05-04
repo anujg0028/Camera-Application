@@ -59,21 +59,26 @@
 @media (max-width: 768px) {
 
     #webCam {
-        width: 300px
+        width: 210px;
+        height: 300px;
+    }
+
+    #zoomOutBtn {
+        margin-left: 15px;
     }
 
     #ClickBtn {
-        top: 90%;
-        left:38%;
+        top: 85%;
+        left: 38%;
     }
 
     #disableSwitchBtn {
-        top: 90%;
-        left: 53%
+        top: 85%;
+        left: 53%;
     }
 
     #switchBtn {
-        top: 90%;
-        left: 53%
+        top: 85%;
+        left: 53%;
     }
 }

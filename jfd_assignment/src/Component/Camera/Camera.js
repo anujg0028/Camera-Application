@@ -47,7 +47,6 @@ const Camera = () => {
     const currentDateTime = () => {
         try {
             const now = new Date();
-            console.log(now);
             const day = String(now.getDate()).padStart(2, '0');
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const year = now.getFullYear().toString().slice(-2);
@@ -103,8 +102,6 @@ const Camera = () => {
     return (<>
         <TransformWrapper
             initialScale={1}
-            initialPositionX={10}
-            initialPositionY={-10}
         >
             {({ zoomIn, zoomOut }) => (
                 <div className="cameraHolder">
@@ -119,8 +116,8 @@ const Camera = () => {
                                 onChange={handleChange}
                                 label="Aspect Ratio"
                             >
-                                <MenuItem value={9/16}>9:16</MenuItem>
-                                <MenuItem value={4/3}>4:3</MenuItem>
+                                <MenuItem value={9/16}>16:9</MenuItem>
+                                <MenuItem value={3/4}>3:4</MenuItem>
                                 <MenuItem value={1}>1:1</MenuItem>
                             </Select>
                         </FormControl>

@@ -1,53 +1,64 @@
 import './dateCardContainer.css'
 import ImageCard from '../ImageCard/ImageCard';
-import { useState, useContext } from 'react';
-import deleteLogo from '../../assets/Images/deleteLogo.svg'
-import { toast } from "react-toastify";
+import { useContext } from 'react';
 import ImageList from '../../Context/ImageListContext.js';
+import moment from 'moment';
+import TickBtn from '../../Context/TickBtn.js';
 
 
 const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
 
-    const { photosList, setPhotoList } = useContext(ImageList);
+    const { photosList, setModalDeleteOpen } = useContext(ImageList);
+    const { tickBtnValue, setTickBtnValue, tickBtnPlace, setTickBtnPlace } = useContext(TickBtn);
 
-    const [tickBtn, setTickBtn] = useState(0);
-
-    const handleTickBtn = () => {
-        if (tickBtn === 0) setTickBtn(1);
-        else if (tickBtn === 1) setTickBtn(0)
-        console.log(tickBtn)
+    const handleDateShowing = () => {
+        const date = moment();
+        const DateMonth = date.format('DD MMMM');
+        const previousDate = moment().subtract(1, 'days').format('DD MMMM');
+        if (DateMonth === param.date) return "Today";
+        else if (previousDate === param.date) return "Yesterday";
+        else return param.date;
     }
 
-    const hanldedeleteBtn = () => {
-        if(tickBtn === 1)return {display: 'block'};
-        else return {display: 'none'};
+    function objectExistsInArray(array, targetObject) {
+        if (Array.isArray(array)) {
+            return array.some(obj => obj.month === targetObject.month && obj.date === targetObject.date);
+        } else {
+            console.error("The provided array is not a valid array.");
+            return false;
+        }
+    }
+
+    function deleteObjectFromArray(array, targetObject) {
+        return array.filter(obj => obj.month !== targetObject.month || obj.date !== targetObject.date);
+    }
+
+    const handleTickBtn = () => { 
+
+        if (tickBtnPlace.length === 0) {
+            setModalDeleteOpen(true);
+            setTickBtnValue(1);
+            setTickBtnPlace([{ month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }]);
+        }
+        else if (tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })) {
+            let newValue = deleteObjectFromArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })
+            if (newValue.length === 0) {
+                setModalDeleteOpen(false);
+                setTickBtnValue(0);
+                setTickBtnPlace([]);
+            }
+            else {
+                setTickBtnPlace(newValue);
+            }
+        }
+        else if (tickBtnValue === 1) {
+            setTickBtnPlace([...tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }]);
+        }
     }
 
     const hanldTickAllBtn = () => {
-        if(tickBtn === 1)return {display: 'block', backgroundColor: 'lightblue'};
-    }
-
-    const handleDeleteAll = () => {
-        try {
-            // eslint-disable-next-line no-restricted-globals
-            let result = confirm(`Are you sure you want to delete all ${param.images.length} photos!`);
-            if(result)
-            {
-                let tempPhotoList = [...photosList];
-
-                tempPhotoList[monthIndex].photos.splice(dateIndex,1);
-    
-                if (tempPhotoList[monthIndex].photos.length === 0) {
-                    tempPhotoList=tempPhotoList.filter((monthImg)=>monthImg.photos.length>0);
-                }
-
-                setPhotoList(tempPhotoList);
-                toast.success("Images deleted successfully")
-            }
-        }
-        catch (e) {
-            toast.error("Something went wrong please try again")
-        }
+        if (tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })) return { display: 'block', backgroundColor: 'lightblue' };
+        else if (tickBtnValue === 1) return { display: 'block' }
     }
 
     return (
@@ -57,15 +68,12 @@ const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
                     <div id='tickBtn' style={hanldTickAllBtn()} onClick={handleTickBtn}>
                         <span>✔</span>
                     </div>
-                    <span id='dateSpan'>{param.date}</span>
-                </div>
-                <div id="deleteAllBtn" style={hanldedeleteBtn()} onClick={handleDeleteAll}>
-                    <img src={deleteLogo} alt="No" />
+                    <span id='dateSpan'>{handleDateShowing()}</span>
                 </div>
             </div>
             <div className='dateWisePhoto'>
                 {param.images.map((photo, index) => (
-                    <ImageCard param={photo} index={index} monthIndex={monthIndex} dateIndex={dateIndex} key={photo.time} tickBtn={tickBtn} />
+                    <ImageCard param={photo} index={index} monthIndex={monthIndex} dateIndex={dateIndex} key={photo.time} objectExistsInArray={objectExistsInArray} />
                 ))}
             </div>
         </div>

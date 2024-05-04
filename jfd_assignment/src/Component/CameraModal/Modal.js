@@ -32,5 +32,3 @@ function CameraModal() {
 }
 
 export default CameraModal;
-
-{/* <Button id='ClickBtn' onClick={captureScreenshot} startIcon={<CameraIcon />} size="large" ></Button> */}

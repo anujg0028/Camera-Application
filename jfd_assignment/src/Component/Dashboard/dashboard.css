@@ -11,8 +11,22 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 40px;
+    gap: 25px;
     width: 100%;
+}
+
+.deleteContainer {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    background-color: white;
+    gap: 10px;
+    height: 55px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 12;
 }
 
 .navBarContainer {
@@ -22,12 +36,27 @@
     height: 50px;
     align-items: center;
     justify-content: space-between;
+    z-index: 10;
+}
+
+.deleteTitle {
+    display: flex;
+    margin-left: 20px;
+    gap: 10px;
+}
+
+.deleteTitle>h3 {
+    margin-top: 6px;
 }
 
 .galeryTitle {
     display: flex;
     margin-left: 20px;
     gap: 10px;
+}
+
+#crossLogoBtn:hover {
+   background-color: transparent;
 }
 
 #logoImg {
@@ -78,6 +107,18 @@
   margin-top: 15px;
 }
 
+.footer {
+    display: flex;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    bottom: 0px;
+    width: 100%;
+    align-self: flex-end;
+    background-color: rgba(163, 219, 240, 0.973);
+}
+
 /* styles.css */
 @media (max-width: 768px) {
 
@@ -87,6 +128,10 @@
 
     .galeryTitle>h3 {
        margin-top: 5px;
+    }
+
+    .deleteTitle>h3 {
+        margin-top: 8px;
     }
 
 }
