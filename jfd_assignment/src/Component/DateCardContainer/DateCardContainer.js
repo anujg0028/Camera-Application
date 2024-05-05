@@ -2,36 +2,14 @@ import './dateCardContainer.css'
 import ImageCard from '../ImageCard/ImageCard';
 import { useContext } from 'react';
 import ImageList from '../../Context/ImageListContext.js';
-import moment from 'moment';
 import TickBtn from '../../Context/TickBtn.js';
+import { handleDateShowing, objectExistsInArray, deleteObjectFromArray } from '../../Utils/dateWiseCompFunc.js';
 
 
 const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
 
     const { photosList, setModalDeleteOpen } = useContext(ImageList);
     const { tickBtnValue, setTickBtnValue, tickBtnPlace, setTickBtnPlace, singleTickBtn, setSingleTickBtn } = useContext(TickBtn);
-
-    const handleDateShowing = () => {
-        const date = moment();
-        const DateMonth = date.format('DD MMMM');
-        const previousDate = moment().subtract(1, 'days').format('DD MMMM');
-        if (DateMonth === param.date) return "Today";
-        else if (previousDate === param.date) return "Yesterday";
-        else return param.date;
-    }
-
-    function objectExistsInArray(array, targetObject) {
-        if (Array.isArray(array)) {
-            return array.some(obj => obj.month === targetObject.month && obj.date === targetObject.date);
-        } else {
-            console.error("The provided array is not a valid array.");
-            return false;
-        }
-    }
-
-    function deleteObjectFromArray(array, targetObject) {
-        return array.filter(obj => obj.month !== targetObject.month || obj.date !== targetObject.date);
-    }
 
     const handleTickBtn = () => {
 
@@ -74,7 +52,7 @@ const DateWisePhotoCont = ({ param, dateIndex, monthIndex }) => {
                     <div id='tickBtn' style={hanldTickAllBtn()} onClick={handleTickBtn}>
                         <span>✔</span>
                     </div>
-                    <span id='dateSpan'>{handleDateShowing()}</span>
+                    <span id='dateSpan'>{handleDateShowing(param)}</span>
                 </div>
             </div>
             <div className='dateWisePhoto'>

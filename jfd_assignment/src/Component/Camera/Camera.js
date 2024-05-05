@@ -13,6 +13,7 @@ import { TransformWrapper } from "react-zoom-pan-pinch";
 import html2canvas from 'html2canvas';
 import ImageList from '../../Context/ImageListContext.js';
 import moment from 'moment';
+import { currentDateTime } from '../../Utils/fileUploadingFunc.js';
 
 
 const Camera = () => {
@@ -42,24 +43,6 @@ const Camera = () => {
     const handleFaceSwitch = async () => {
         if (cameraFace === "user") setCameraFace("environment")
         else setCameraFace("user");
-    }
-
-    const currentDateTime = () => {
-        try {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear().toString().slice(-2);
-            const hour = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const formattedDateTime = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
-            return formattedDateTime;
-        }
-        catch (e) {
-            console.log(e);
-            return "";
-        }
     }
 
     const captureScreenshot = async () => {

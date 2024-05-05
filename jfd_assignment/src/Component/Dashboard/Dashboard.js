@@ -12,9 +12,11 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import TickBtn from '../../Context/TickBtn';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 import DownloadIcon from '@mui/icons-material/Download';
 import DriveFolderUploadRoundedIcon from '@mui/icons-material/DriveFolderUploadRounded';
+import { handleFileSelect } from '../../Utils/fileUploadingFunc.js';
+import { savePhotoToFileSystem } from '../../Utils/fileDownloadingFunc.js';
+import { hanldePhotoSelected, findMonthDatePhotos, hanldleSingleImageSearch } from '../../Utils/tickBtnFunc.js';
 
 const Dashboard = () => {
 
@@ -25,7 +27,6 @@ const Dashboard = () => {
     const [tickBtnPlace, setTickBtnPlace] = useState([]);
     const [singleTickBtn, setSingleTickBtn] = useState([]);
 
-    //download photos start --------------------------------------------
     const handleDownload = () => {
         try {
 
@@ -78,159 +79,10 @@ const Dashboard = () => {
         }
     };
 
-    // Function to save photo to file system
-    const savePhotoToFileSystem = async (directoryHandle, photo) => {
-        const blob = dataURItoBlob(photo.src);
-        const type = photo.src.split(';')[0].split('/')[1];
-        await directoryHandle.getFileHandle(`${photo.name}` + `.${type}`, { create: true }).then((fileHandle) => {
-            fileHandle.createWritable().then((fileWritable) => {
-                fileWritable.write(blob);
-                fileWritable.close();
-            });
-        });
-    };
-
-    // Function to convert data URI to Blob
-    const dataURItoBlob = (dataURI) => {
-        const byteString = atob(dataURI.split(',')[1]);
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: mimeString });
-    };
-    //download photos end -------------------------------------
-
-
-    //file upload start------------------------------
-    const currentDateTime = () => {
-        try {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear().toString().slice(-2);
-            const hour = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const formattedDateTime = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
-            return formattedDateTime;
-        }
-        catch (e) {
-            console.log(e);
-            return "";
-        }
-    }
-
-    const handleFileSelect = (event) => {
-        const file = event.target.files[0]; // Get the selected file
-        if (file) {
-            if (!file.type.match('image/.*')) {
-                toast.error("Please select an image file (JPG, PNG, etc.)");
-                return;
-            }
-            handleImageChange(file);
-        }
-    };
-
-    const handleImageChange = (file) => {
-        try {
-            const dateTime = currentDateTime();
-            const date = moment();
-            const monthYear = date.format('MMMM YYYY');
-
-            if (photosList.length > 0 && photosList[0].month === monthYear) {
-                if (photosList[0].photos[0].date === date.format('DD MMMM')) {
-                    const newPhotoList = [...photosList];
-                    newPhotoList[0].photos[0].images.push({ time: dateTime, src: URL.createObjectURL(file), aspectRatio: 1 });
-                    setPhotoList(newPhotoList);
-                }
-                else {
-                    const newPhotoList = [...photosList];
-                    newPhotoList[0].photos = [{ date: date.format('DD MMMM'), images: [{ time: dateTime, src: URL.createObjectURL(file), aspectRatio: 1 }] }, ...newPhotoList[0].photos]
-                    setPhotoList(newPhotoList);
-                }
-            }
-            else {
-                let newObj = {
-                    month: monthYear,
-                    photos: [{ date: date.format('DD MMMM'), images: [{ time: dateTime, src: URL.createObjectURL(file), aspectRatio: 1 }] }]
-                };
-                setPhotoList([newObj, ...photosList]);
-            }
-            toast.success("Image upload successfully!")
-        }
-        catch (e) {
-            toast.error("Something went wrong please try after sometime!");
-            console.log(e);
-        }
-    };
-    //file upload end -----------------------
-
-    function objectExistsInArray(array, date) {
-        if (Array.isArray(array)) {
-            let newVal = {};
-            for (let i in array) {
-                if (array[i].date === date) {
-                    newVal['dateIndex'] = i;
-                    newVal['TotImages'] = array[i].images.length;
-                    break;
-                }
-            }
-            return newVal;
-        } else {
-            console.error("The provided array is not a valid array.");
-            return false;
-        }
-    }
-
-    const findMonthDatePhotos = (array, monthStr, dateStr) => {
-        let obj = {};
-        for (let i in array) {
-            if (array[i].month === monthStr) {
-                obj['monthIndex'] = i;
-                obj['dateVal'] = objectExistsInArray(array[i].photos, dateStr);
-                break;
-            }
-        }
-        return obj;
-    }
-
-    const hanldleSingleImageSearch = (array, monthStr, dateStr, index) => {
-        let obj = {};
-        for (let i in array) {
-            if (array[i].month === monthStr) {
-                for (let j in array[i].photos) {
-                    if (array[i].photos[j].date === dateStr) {
-                        for (let k in array[i].photos[j].images) {
-                            if (array[i].photos[j].images[k].time === index) {
-                                obj['monthIndex'] = i;
-                                obj['dateIndex'] = j;
-                                obj['photoIndex'] = k;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return obj;
-    }
-
-    const hanldePhotoSelected = () => {
-        if (tickBtnPlace.length === 0) return 0;
-        let total = singleTickBtn.length > 0 ? singleTickBtn.length : 0;
-        for (let obj of tickBtnPlace) {
-            total += findMonthDatePhotos(photosList, obj.month, obj.date).dateVal.TotImages;
-        }
-        return total;
-    }
-
     const handleDelete = () => {
         try {
             // eslint-disable-next-line no-restricted-globals
-            let result = confirm(`Are you sure you want to delete all ${hanldePhotoSelected()} photos!`);
+            let result = confirm(`Are you sure you want to delete all ${hanldePhotoSelected(photosList,tickBtnPlace,singleTickBtn)} photos!`);
             if (result) {
                 let tempPhotoList = [...photosList];
                 for (let i of tickBtnPlace) {
@@ -279,7 +131,7 @@ const Dashboard = () => {
                             <div className="deleteContainer">
                                 <div className="deleteTitle">
                                     <Button id='crossLogoBtn' onClick={() => { setTickBtnPlace([]); setTickBtnValue(0); setModalDeleteOpen(false); setSingleTickBtn([]) }} startIcon={<ClearIcon style={{ fontSize: '25px' }} />} size="large" ></Button>
-                                    <h3> {hanldePhotoSelected()} Photos Selected</h3>
+                                    <h3> {hanldePhotoSelected(photosList,tickBtnPlace,singleTickBtn)} Photos Selected</h3>
                                 </div>
 
                                 <div className="deleteAndDownloadBtn">
@@ -309,7 +161,7 @@ const Dashboard = () => {
                                         id="imageUploadBtn"
                                         sx={{ backgroundColor: 'transparent', border: 'none', color: 'inherit' }}
                                     >
-                                        <input type="file" id="imageUpload" accept="image/*" style={{ display: 'none' }} onChange={handleFileSelect} />
+                                        <input type="file" id="imageUpload" accept="image/*" style={{ display: 'none' }} onChange={(event) => handleFileSelect(event,photosList,setPhotoList)} />
                                     </Button>
                                 </div>
                             </div>

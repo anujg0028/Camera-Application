@@ -8,7 +8,6 @@ import TickBtn from '../../Context/TickBtn';
 const ImageCard = ({ param, index, monthIndex, dateIndex, objectExistsInArray }) => {
 
     const { photosList, setPhotoList } = useContext(ImageList);
-
     const { tickBtnValue, tickBtnPlace, singleTickBtn, setSingleTickBtn, setTickBtnPlace } = useContext(TickBtn);
 
     const handleDeleteCard = () => {
