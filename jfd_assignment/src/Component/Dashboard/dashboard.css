@@ -56,6 +56,11 @@
     gap: 10px;
 }
 
+.galeryTitle>h3 {
+    font-size:x-large;
+    font-weight: bold;
+}
+
 #crossLogoBtn:hover {
    background-color: transparent;
 }
@@ -117,9 +122,10 @@
     z-index: 10;
     justify-content: center;
     align-items: center;
-    height: 30px;
+    height: 40px;
     width: 100%;
-    background-color: rgba(163, 219, 240, 0.973);
+    gap: 15px;
+    background-color: rgba(163, 219, 240, 0.192);
     margin-top: auto;
 }
 
@@ -128,7 +134,6 @@
     align-items: center;
     justify-content: space-between;
 }
-
 
 #downloadBtn {
     margin-top: 5px;

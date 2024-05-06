@@ -1,5 +1,5 @@
 import "./camera.css"
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,27 +18,16 @@ import { currentDateTime } from '../../Utils/fileUploadingFunc.js';
 
 const Camera = () => {
 
-    const { photosList, setPhotoList, setModalOpen } = useContext(ImageList);
+    const { photosList, setPhotoList, setModalOpen, noOfCamera, getDevices } = useContext(ImageList);
     const [aspectRatio, setAspectRatio] = useState(9/16);
     const elementRef = useRef(null);
     const [cameraFace, setCameraFace] = useState("user");
-    const [numberOfCamera, setNumberOfCamera] = useState(0);
+
+    useEffect(()=>{
+        getDevices();
+    },[])
 
     const handleChange = (event) => setAspectRatio(event.target.value);
-
-    useEffect(() => {
-        const getDevices = async () => {
-            try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const frontFacingCameras = devices.filter(device => device.kind === "videoinput");
-                setNumberOfCamera(frontFacingCameras.length);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        }
-        getDevices();
-    }, []);
 
     const handleFaceSwitch = async () => {
         if (cameraFace === "user") setCameraFace("environment")
@@ -105,9 +94,17 @@ const Camera = () => {
                     </div>
                     <Controls elementRef={elementRef} aspectRatio={aspectRatio} cameraFace={cameraFace} />
                     <Button id='ClickBtn' onClick={captureScreenshot} startIcon={<CameraIcon style={{fontSize: '40px'}} />} size="large" ></Button>
+                    <div className="cameraSwitchPhn">
+                        <Button id='switchBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button>
+                    </div>
+                    <div className="cameraSwitchLaptop">
                     {
-                        numberOfCamera > 1 ? <Button id='switchBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> : <Button disabled id='switchDisableBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> 
+                        noOfCamera > 1 ? <Button id='switchBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> : <Button disabled id='switchDisableBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> 
                     }
+                    </div>
+                    {/* {
+                        noOfCamera > 1 ? <Button id='switchBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> : <Button disabled id='switchDisableBtn' onClick={handleFaceSwitch} startIcon={< CameraswitchIcon style={{fontSize: '40px'}} />} size="large" ></Button> 
+                    } */}
 
                 </div>
             )}

@@ -1,5 +1,5 @@
 import "./dashboard.css"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import galeryLogo from '../../assets/Images/galeryLogo.png';
@@ -23,9 +23,25 @@ const Dashboard = () => {
     const [photosList, setPhotoList] = useState([...images]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+    const [noOfCamera, setNoOfCamera] = useState(0);
     const [tickBtnValue, setTickBtnValue] = useState(0);
     const [tickBtnPlace, setTickBtnPlace] = useState([]);
     const [singleTickBtn, setSingleTickBtn] = useState([]);
+
+    const getDevices = async () => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const frontFacingCameras = devices.filter(device => device.kind === "videoinput");
+            setNoOfCamera(frontFacingCameras.length);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffect(()=>{
+        getDevices()
+    },[])
 
     const handleDownload = () => {
         try {
@@ -123,7 +139,7 @@ const Dashboard = () => {
     }
 
     return (
-        <ImageList.Provider value={{ photosList, setPhotoList, setModalOpen, setModalDeleteOpen, modalDeleteOpen }}>
+        <ImageList.Provider value={{ photosList, setPhotoList, setModalOpen, setModalDeleteOpen, modalDeleteOpen, noOfCamera, getDevices }}>
             <TickBtn.Provider value={{ tickBtnValue, setTickBtnValue, tickBtnPlace, setTickBtnPlace, singleTickBtn, setSingleTickBtn }}>
                 <div className="App">
                     <div className="dashboard">
@@ -183,7 +199,8 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className="footer">
-                                <p>Developed by <i>Anuj Garg</i></p>
+                                <p style={{fontWeight: '500'}}>Developed by <i><a target="_blank" href="https://www.linkedin.com/in/anujg0028/">Anuj Garg</a></i></p>
+                                <p> |&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Go to Top</a></p>
                             </div>
                         </div>
                     </div>

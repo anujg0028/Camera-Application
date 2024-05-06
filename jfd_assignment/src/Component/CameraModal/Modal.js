@@ -1,12 +1,16 @@
 import "./modal.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Camera from '../Camera/Camera.js';
 import ImageList from '../../Context/ImageListContext.js';
 
 function CameraModal() {
 
-    const { setModalOpen } = useContext(ImageList);
+    const { setModalOpen, getDevices } = useContext(ImageList);
     const [btnloading, setBtnLoading] = useState(false);
+
+    useEffect(()=>{
+        getDevices();
+    },[]);
 
     return (
         <div className="addNewModalBackground">

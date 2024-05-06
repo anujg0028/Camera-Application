@@ -55,6 +55,14 @@
     left: 53%
 }
 
+.cameraSwitchPhn {
+    display: none;
+}
+
+.cameraSwitchLaptop{
+    display: block;
+}
+
 /* styles.css */
 @media (max-width: 768px) {
 
@@ -80,5 +88,13 @@
     #switchBtn {
         top: 85%;
         left: 53%;
+    }
+
+    .cameraSwitchPhn {
+        display: block;
+    }
+    
+    .cameraSwitchLaptop{
+        display: none;
     }
 }

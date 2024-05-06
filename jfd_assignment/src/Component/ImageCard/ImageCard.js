@@ -51,6 +51,8 @@ const ImageCard = ({ param, index, monthIndex, dateIndex, objectExistsInArray })
 
     const handleSingleTickBtn = () => {
 
+        if(tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }))return;
+
         if (singleTickBtn.length === 0) {
             if (photosList[monthIndex].photos[dateIndex].images.length === 1) {
                 setTickBtnPlace([...tickBtnPlace,{ month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }]);
@@ -68,7 +70,7 @@ const ImageCard = ({ param, index, monthIndex, dateIndex, objectExistsInArray })
         }
         else {
             if (hangleMatchingDateFinder('addedNewTick')) {
-                let dateImagesSelected = singleTickBtn.filter((obj) => obj.month !== photosList[monthIndex].month && obj.date !== photosList[monthIndex].photos[dateIndex].date);
+                let dateImagesSelected = singleTickBtn.filter((obj) => obj.date !== photosList[monthIndex].photos[dateIndex].date);
                 setSingleTickBtn(dateImagesSelected);
                 setTickBtnPlace([...tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date }]);
             }
@@ -89,18 +91,18 @@ const ImageCard = ({ param, index, monthIndex, dateIndex, objectExistsInArray })
 
     const hanldSingleTickStyle = () => {
         if (hangleMatchingDateFinder()) return { backgroundColor: 'lightblue' };
-        else if (tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })) return { display: 'none' }
+        else if (tickBtnValue === 1 && objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })) return { backgroundColor: 'lightblue', cursor: 'default' }
     }
 
     const hanldeSpanTick = () => {
-        if (hangleMatchingDateFinder()) return { display: 'block' };
-        else return { display: 'none' };
+        if (hangleMatchingDateFinder() || objectExistsInArray(tickBtnPlace, { month: photosList[monthIndex].month, date: photosList[monthIndex].photos[dateIndex].date })) return { display: 'block' };
+        // else return { display: 'none' };
     }
 
     return (
         <div className="imageShowContainer" style={handleSelectAll()}>
             {
-                tickBtnValue === 1 ? <div id='singleImageTickBtn' style={hanldSingleTickStyle()} onClick={handleSingleTickBtn}><span style={hanldeSpanTick()}>✔</span></div>
+                tickBtnValue === 1 ? <div id='singleImageTickBtn' style={hanldSingleTickStyle()} onClick={handleSingleTickBtn}><span id="tick" style={hanldeSpanTick()}>✔</span></div>
                     : <div id="deleteBtn" style={handleDeleteBtn()} onClick={() => handleDeleteCard()}><img src={deleteLogo} alt="No" /></div>
             }
             <img className="photoImg" src={param.src} alt={"Something went wrong"} />
